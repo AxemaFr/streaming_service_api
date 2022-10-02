@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Request,
   UseGuards,
   UseInterceptors,
@@ -20,6 +21,7 @@ import {
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { SongsService } from './songs.service';
 import { Song } from './song.entity';
+import { GetAllSongsDto } from './get-all-songs.dto';
 
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
@@ -27,6 +29,16 @@ import { Song } from './song.entity';
 @Controller('songs')
 export class SongsController {
   constructor(private readonly songsService: SongsService) {}
+
+  @Get()
+  @ApiOkResponse({
+    description: 'Returns all songs',
+    type: [Song],
+  })
+  @ApiInternalServerErrorResponse({ description: 'Something went wrong' })
+  async getAll(@Query() params: GetAllSongsDto): Promise<Song[]> {
+    return this.songsService.getAll(params);
+  }
 
   @Get('/:songId')
   @ApiOkResponse({ description: 'Returns song', type: Song })

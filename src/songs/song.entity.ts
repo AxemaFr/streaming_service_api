@@ -1,10 +1,11 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, JoinTable,
+  Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Playlist } from '../playlists/playlist.entity';
 import { Album } from '../albums/album.entity';
@@ -25,6 +26,10 @@ export class Song {
   @ApiProperty({ type: String, description: 'File name' })
   @Column()
   filename: string;
+
+  @ApiProperty({ type: String, description: 'File name' })
+  @Column()
+  path: string;
 
   @ApiProperty({ type: String, description: 'Image' })
   @Column()
